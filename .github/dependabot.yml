@@ -11,7 +11,3 @@ updates:
       - "alfupe"
     labels:
       - "dependencies"
-    rebase-strategy: "auto"
-    automerge:
-      - type: "patch"
-        update-types: [ "version-update:semver-patch" ]

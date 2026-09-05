@@ -1,69 +1,61 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Minimal boilerplate for React with TypeScript, Vite, Oxlint, and Vitest browser-mode testing with pepito.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React 19** + **TypeScript 7** + **Vite 8**
+- **Oxlint** for linting, **Prettier** for formatting
+- **Vitest 4** (browser mode via Playwright) + **pepito** for testing
+- **MSW** for network mocking
 
-## Expanding the ESLint configuration
+## Scripts
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Command          | Description                         |
+| ---------------- | ----------------------------------- |
+| `npm run dev`    | Start dev server with HMR           |
+| `npm run build`  | Type-check and build for production |
+| `npm run lint`   | Run Oxlint                          |
+| `npm test`       | Run tests in browser mode           |
+| `npm run preview`| Preview production build            |
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Testing
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+Tests run in a real browser via Vitest browser mode with Playwright.
+Pepito provides `mount` for React components and network matchers on
+top of MSW.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Declare MSW handlers as usual:
+
+```ts
+import { http, HttpResponse } from 'msw'
+
+export const handlers = [
+  http.get('https://api.example.com/users', () => {
+    return HttpResponse.json([{ id: 1, name: 'John' }])
+  }),
+]
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Set up pepito in `vitest.setup.ts`:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```ts
+import { setupNetwork } from '@yabbadabbadev/pepito'
+import { handlers } from './src/mocks/handlers'
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+setupNetwork(handlers)
+```
+
+Write tests with `mount`:
+
+```tsx
+import { mount } from '@yabbadabbadev/pepito/react'
+import { App } from './App'
+
+describe('App', () => {
+  it('renders', async () => {
+    const screen = await mount(<App />)
+    await expect.element(screen.getByRole('heading')).toBeVisible()
+  })
+})
 ```

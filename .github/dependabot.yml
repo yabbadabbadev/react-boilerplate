@@ -27,9 +27,12 @@ updates:
           - "prettier"
       testing:
         patterns:
-          - "@testing-library/*"
+          - "@yabbadabbadev/pepito"
+          - "vitest-browser-react"
+          - "@vitest/browser*"
+          - "playwright"
+          - "msw"
           - "vitest"
-          - "jsdom"
 
   - package-ecosystem: github-actions
     directory: "/"

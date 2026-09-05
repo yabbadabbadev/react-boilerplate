@@ -1,11 +1,12 @@
-import { render, screen } from '@testing-library/react'
-import { App } from 'App'
-import { expect } from 'vitest'
+import { mount } from '@yabbadabbadev/pepito/react'
+import { App } from '../App'
 
 describe('App', () => {
-  it('renders the App component', () => {
-    render(<App />)
+  it('renders the App component', async () => {
+    const screen = await mount(<App />)
 
-    expect(screen.getAllByRole('heading', { name: 'Hello World!', level: 1 }))
+    await expect
+      .element(screen.getByRole('heading', { name: 'Hello World!', level: 1 }))
+      .toBeVisible()
   })
 })

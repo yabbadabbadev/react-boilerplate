@@ -25,7 +25,7 @@
     "noUncheckedSideEffectImports": true,
 
     /* New configuration */
-    "types": ["vitest/globals", "vite/client", "@testing-library/jest-dom"],
+    "types": ["vite/client", "vitest/globals"],
   },
-  "include": ["src", "./setupTests.ts"]
+  "include": ["src"],
 }

@@ -15,19 +15,24 @@
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
-    "@testing-library/dom": "^10.4.1",
-    "@testing-library/jest-dom": "^7.0.1",
-    "@testing-library/react": "^16.3.3",
-    "@testing-library/user-event": "^14.6.7",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.5",
     "@vitejs/plugin-react": "^6.1.1",
-    "jsdom": "^30.0.1",
+    "@vitest/browser": "^4.1.11",
+    "@vitest/browser-playwright": "^4.1.11",
+    "@yabbadabbadev/pepito": "^0.2.0",
     "msw": "^2.15.0",
     "oxlint": "^1.81.0",
+    "playwright": "^1.63.0",
     "prettier": "^3.6.2",
     "typescript": "~7.0.2",
     "vite": "^8.2.2",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.11",
+    "vitest-browser-react": "^2.3.0"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }

@@ -19,10 +19,11 @@ updates:
         patterns:
           - "vite"
           - "@vitejs/*"
-      eslint:
+      oxlint:
         patterns:
-          - "eslint*"
-          - "@typescript-eslint/*"
+          - "oxlint*"
+      prettier:
+        patterns:
           - "prettier"
       testing:
         patterns:

@@ -7,7 +7,7 @@
     "dev": "vite",
     "test": "vitest",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "lint": "oxlint .",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -24,6 +24,7 @@
     "@vitejs/plugin-react": "^6.1.1",
     "jsdom": "^30.0.1",
     "msw": "^2.15.0",
+    "oxlint": "^1.81.0",
     "prettier": "^3.6.2",
     "typescript": "~5.8.3",
     "vite": "^8.2.2",
